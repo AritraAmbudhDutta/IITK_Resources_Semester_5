@@ -1,0 +1,19 @@
+Q1.
+   int X = 1000; //Shared global variable
+
+   deposit(){                        withdraw(){
+       X = X + 10;                       X = X - 10;
+   }                                 }
+On a given multi-processor system, three threads T1, T2 and T3 are concurrently executing. T1 and T2 invoke 'deposit' K times each and T3 invokes 'withdraw' K times during their respective lifetimes. Assuming non-atomic add/subtract operations and no integer overflow during the execution, what will be the value of X (may be expressed as a set or range) when all the threads finish their execution?   (5)
+
+Q2. Consider the following pseudocode.
+    int gvar = 0;
+    sem_init(S, 5);  // Initialize the semaphore S with value 5
+    doit(){
+        sem_wait(S);
+        sem_wait(S);
+        gvar++;     //Increment is not atomic
+        sem_post(S);
+        sem_post(S);
+    }
+What is the minimum and maximum value of 'gvar' when 3 threads execute 'doit' concurrently to completion? (5)

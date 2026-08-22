@@ -1,0 +1,22 @@
+Q1. Select the correct answer(s) for the following questions.
+Note that, you have to write all correct choices. (2 x 3 = 6)
+
+(i) Which of the following operation(s) can not be allowed from user mode? Assume X86 system.
+A) Changing the IDT descriptors
+B) Changing the virtual-to-physical translation information
+C) Changing the stack pointer register (SP)
+D) Changing the instruction pointer (IP)
+E) Changing the last two bits of the code segment register (i.e, the CPL) 
+
+(ii) The second argument for correct execution of a program with the 'read' system call can be
+A) an address from the program stack segment
+B) an address from the code segment
+C) an address from the program initialized data segment
+D) an address from the program uninitialized data segment
+E) any address in the user process address space
+
+Q2. True or False with reasoning (1-2 sentences). No marks without proper justification. (2 x 2 = 4)
+
+(i) System idle process (a.k.a. the swapper process ) can be a user mode process.
+
+(ii) Allocation of kernel stack for a newly created process can be delayed till it is scheduled for the first time.

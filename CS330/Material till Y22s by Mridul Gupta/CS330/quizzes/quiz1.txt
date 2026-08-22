@@ -1,0 +1,27 @@
+Q1. Consider the following program which is compiled in the Linux OS to create an executable file named 'mexec'.
+1 #include<stdio.h>
+2 #include<stdlib.h>
+3 #include<unistd.h>
+4 int sum = 0;
+5 int func(void){
+6       pid_t pid = fork();    //Assume success
+7       if(pid == 0 && sum < 10){
+8            sleep(1);
+9            execl("./mexec", "mexec", NULL); //Assume success
+10           return 10;
+11      }
+12      return 20;
+13 }
+14 int main(void){
+15    while(sum < 10){
+16         sum += func();
+17    } 
+18    printf("Sum = %d\n", sum);
+19 }
+Consider that we execute './mexec' on the bash shell. Answer the following questions,
+(a) What will the behavior of this program and why? (Give reasons using 2/3 sentences)
+(b) What is the maximum and minimum number of processes active at any point of time during the program execution (assume execution of the parents finish before their children invoke the 'execl' system call at line #9)?
+(c) How many PCBs will be created and destroyed during the execution of the program?
+(d) What will be the output of the program if the 'execl' at line #9 is commented?
+
+                                                                (4 + 2 + 2 + 2 = 10)   

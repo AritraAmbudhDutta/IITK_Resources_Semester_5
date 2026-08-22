@@ -1,0 +1,21 @@
+1. (2x3 = 6)
+(i) The maximum physical address size supported (irrespective of the actual physical memory size of the system) by a multi-level paging system
+depends on the
+A) number of access/flag bits in the page table entries
+B) number of levels in the page table
+C) number of processes in the system
+D)scheme for managing the OS virtual address space (i.e., split vs. separate)
+E) page size
+
+(ii) A process successfully invokes the munmap system call to free 1GB from its virtual address space. Which of the following statement(s) is/are true assuming a system with multi-level page tables? 
+
+A) The minimum amount physical memory freed is zero 
+B) At least 1GB of physical memory is freed
+C) The amount physical memory freed can be more than 1GB
+D) The page table of the process may not be modified at all
+E) The OS must have performed non-zero number of TLB flushes 
+
+2. True or False. Give a brief explanation. (2x2 = 4)
+
+(i) Assuming TLB without ASID support, a full TLB flush is required on every context switch performed by the scheduler.
+(ii) The page frames containing the OS code can be swapped out.

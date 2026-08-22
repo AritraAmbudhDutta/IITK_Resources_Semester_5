@@ -1,0 +1,17 @@
+1. int main(void){
+2.   char *optr = NULL, *ptr = sbrk(0);    
+3.   while(fork() > 0){
+4.         optr = sbrk(4096); 
+5.         if(optr == ptr + 4096){
+6.             break;
+7.	 }
+8.   } 
+9.   printf("pid %d ptr = %p optr = %p\n", getpid(), ptr, optr);
+10.  exit(0);
+11. } 
+Assume that all system calls are executed successfully. The term `output' refers to the lines printed on the console during the execution of the program. Answer the following questions (no explanation required).
+Q1. How many times the `printf' statement in line#9 will be executed? (2) 
+Q2. The value of `ptr' will be same for all output lines (True/False) (1)
+Q3. What is the minimum and maximum number of output lines where `optr' will be NULL? (3)
+Q4. The value of `optr' will be distinct in all output lines (True/False) (2)
+Q5. Value of `optr' will be non-decreasing in the output lines. (True/False) (2) 

@@ -1,0 +1,15 @@
+ ________________________________________________________ 
+|              |              |             |            |   
+|   10 bits    |   10 bits    |  10 bits    |  13 bits   |   
+|______________|______________|_____________|____________|
+  Offset to       Offset to      Offset to    Page offset
+  Level-1 PT      Level-2 PT     Level-3 PT  
+
+Consider a 3-level paging system for forty-three bit (43-bit) virtual address (as shown above) and a page size of eight kilobytes (8 KB).
+Consider the OS uses a separate address space for itself. Answer the following questions (no explanation required)
+
+a) If there are 100 processes at any point of time, what is the virtual address space size of each process? [2]
+b) What is the maximum amount of memory required to maintain the page table for a single process? [2] 
+c) How much virtual address is covered by a single page table entry in Level-2? [2]  
+d) What is the range of the virtual address translated using the fifth entry (entries counted from one) of the Level-1 page table? [2]
+e) If a page table entry requires eight bits for access flags and four bits are reserved what is the maximum physical memory supported by this system? [2]
