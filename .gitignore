@@ -1,0 +1,14 @@
+﻿# Windows / OneDrive artifacts
+desktop.ini
+Thumbs.db
+ehthumbs.db
+.DS_Store
+$RECYCLE.BIN/
+*.lnk
+~$*
+
+# Excluded from GitHub (kept locally)
+/CS330/Exams/
+/CS330/Labs/
+/CS330/Material till Y22s by Mridul Gupta/
+/CS330/Y21 CS330 Divyansh/

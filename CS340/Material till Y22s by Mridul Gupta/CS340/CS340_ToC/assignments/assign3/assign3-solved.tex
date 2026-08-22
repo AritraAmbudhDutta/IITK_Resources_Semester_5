@@ -1,0 +1,331 @@
+\documentclass{article}
+
+\usepackage{assign}
+
+\setcoursetitle{CS345: Theory of Computation}
+\setassigncode{1}
+\setauthname{Gurpreet Singh}
+\setauthroll{150259}
+
+\begin{document}
+\makeheader%
+
+\begin{question}
+
+	\begin{qpart}{1}
+		\begin{figure}[h!]
+			\centering
+			\begin{tikzpicture}[->, >=stealth', shorten >=1pt, auto, node distance=2.8cm, semithick]
+			
+				\node[initial,state]				(s)				 		{$S$};
+				\node[state]						(a) [right of=s] 		{$q_1$};
+				\node[state]						(b) [right of=a] 		{$q_{20}$};
+				\node[state]						(g) [above of=b] 		{$q_{21}$};
+				\node[state]						(c) [right of=b] 		{$q_{30}$};
+				\node[state]						(h) [below right of=c]	{$q_{31}$};
+				\node[state]						(i) [below left of=c] 	{$q_{32}$};
+				\node[state]						(d) [right of=c] 		{$q_4$};
+				\node[double distance=1mm,state]	(f) [right of=d] 		{$F$};
+				
+				\path	(s)		edge				node		{$\eps: \eps \ra \#$}	(a)
+						(a)		edge [loop above]	node		{a: $\eps \ra$ X}		(a)
+								edge				node		{$\eps: \eps \ra \eps$} (b)
+						(b)		edge [bend left]	node		{b: $\eps \ra$ Y}		(g)
+								edge				node		{$\eps: \eps \ra \eps$}	(c)
+						(g)		edge [bend left]	node		{$\eps: \eps \ra Y$} 	(b)
+						(c)		edge				node		{c: Y $\ra \eps$ }		(h)
+								edge				node		{$\eps: \eps \ra \eps$} (d)
+						(h)		edge				node		{$\eps$: Y $\ra \eps$ }	(i)
+						(i)		edge				node		{$\eps$: Y $\ra \eps$ }	(c)
+						(d)		edge [loop above]	node		{d: X $\ra \eps$}		(d)
+								edge				node		{$\eps: \# \ra \eps$}	(f);
+					
+			\end{tikzpicture}
+			\caption{PDA for $L_1$}
+		\end{figure}
+	\end{qpart}
+	
+	\begin{qpart}{2}
+		\textbf{Reference:}	\href{https://cs.stackexchange.com/questions/19151/is-the-complement-of-ww-context-free}{Stack Overflow} (Referred to the CFG only --- proved myself)
+		\begin{figure}[h!]
+			\centering
+			\begin{tikzpicture}[->, >=stealth', shorten >=1pt, auto, node distance=2.8cm, semithick]
+			
+				\node[initial,state]				(s)				 		{$S$};
+
+				\node[state]						(a1) [above right of=s] 	{$q_{00}$};
+				\node[state]						(a2) [right of=a1] 			{$q_{01}$};
+				\node[state]						(a3) [right of=a2] 			{$q_{02}$};
+				\node[state]						(a4) [right of=a3] 			{$q_{03}$};
+
+				\node[state]						(c1) [below right of=a2]	{$q_{10}$};
+				
+				\node[state]						(b1) [below right of=s] 	{$q_{20}$};
+				\node[state]						(b2) [right of=b1] 			{$q_{21}$};
+				\node[state]						(b3) [right of=b2] 			{$q_{22}$};
+				\node[state]						(b4) [right of=b3] 			{$q_{23}$};
+
+				\node[double distance=1mm, state]	(f)	[below right of=a4]{F};
+				
+				\path	(s)		edge				node		{$\eps: \eps \ra \#$}	(a1)
+								edge 				node [swap]	{$\eps: \eps \ra \#$}	(b1)
+								edge 				node		{$\eps: \eps \ra \#$}	(c1)
+
+						(a1)	edge [loop above]	node 		{$a, b: \eps \ra $ A}	(a1)
+								edge				node 		{$a: \eps \ra \eps$}	(a2)
+						(a2)	edge [loop above]	node 		{$a, b:$ A $ \ra \eps$}	(a2)
+								edge				node 		{$\eps: \# \ra \#$}		(a3)
+						(a3)	edge [loop above]	node 		{$a, b: \eps \ra $ A}	(a3)
+								edge				node 		{$b: \eps \ra \eps$}	(a4)
+						(a4)	edge [loop above]	node 		{$a, b:$ A $\ra \eps$}	(a3)
+								edge				node 		{$\eps: \# \ra \eps$}	(f)
+
+						(b1)	edge [loop below]	node 		{$a, b: \eps \ra $ A}	(b1)
+								edge				node 		{$b: \eps \ra \eps$}	(b2)
+						(b2)	edge [loop below]	node 		{$a, b:$ A $ \ra \eps$}	(b2)
+								edge				node 		{$\eps: \# \ra \#$}		(b3)
+						(b3)	edge [loop below]	node 		{$a, b: \eps \ra $ A}	(b3)
+								edge				node 		{$b: \eps \ra \eps$}	(b4)
+						(b4)	edge [loop below]	node 		{$a, b:$ A $\ra \eps$}	(b3)
+								edge				node [swap]	{$\eps: \# \ra \eps$}	(f)
+
+						(c1)	edge [bend left=20]	node		{$a, b:$ A $ \ra \eps$}	(f)
+						(f)		edge [bend left=20]	node		{$a, b: \eps \ra$ A}	(c1)
+				;
+			\end{tikzpicture}
+			\caption{PDA for $L_1$}
+		\end{figure}
+	\end{qpart}
+
+\end{question}
+
+\clearpage
+
+\begin{question}
+	
+	\begin{align*}
+		L \eq &\set{a^i b^j c^k d^l \pipe i = k \mt{and} j = 2l} \\
+		M \eq &\set{a^i b^j c^k d^l \pipe i = k \mt{or} j = 2l}
+	\end{align*}
+
+	\begin{qpart}{1}
+
+		$M$ is context free wheras $L$ is not context free.
+		
+	\end{qpart}
+
+	\begin{qpart}{2} 
+
+			\begin{figure}[h!]
+				\centering
+				\begin{tikzpicture}[->, >=stealth', shorten >=1pt, auto, node distance=2.8cm, semithick]
+					\node[initial,state]				(s)							{$S$};
+					
+					\node[state]						(a1)	[above right of=s]	{$q_1$};
+					\node[state]						(b1)	[right of=a1]		{$q_2$};
+					\node[state]						(c1)	[right of=b1]		{$q_3$};
+					\node[state]						(d1)	[right of=c1]		{$q_4$};
+
+					\node[state]						(a2)	[below right of=s]	{$p_1$};
+					\node[state]						(b2)	[right of=a2]		{$p_2$};
+					\node[state]						(c2)	[right of=b2]		{$p_3$};
+					\node[state]						(d2)	[right of=c2]		{$p_4$};
+
+					\node[double distance=1mm,state]	(f)		[below right of=d1]	{$F$};
+					
+					\path	(s)		edge				node		{$\eps: \eps \ra \#$}	(a1)
+									edge				node [swap]	{$\eps: \eps \ra \#$}	(a2)
+
+							(a1)	edge [loop above]	node		{a: $\eps \ra$ X}		(a1)
+									edge				node		{$\eps: \eps \ra \eps$} (b1)
+							(b1)	edge [loop above]	node		{b: $\eps \ra \eps$}	(b1)
+									edge				node		{$\eps: \eps \ra \eps$}	(c1)
+							(c1)	edge [loop above]	node		{c: $\eps \ra \eps$ }	(c1)
+									edge				node		{$\eps: \eps \ra \eps$} (d1)
+							(d1)	edge [loop above]	node		{d: X $\ra \eps$}		(d1)
+									edge				node		{$\eps: \# \ra \eps$}	(f)
+
+							(a2)	edge [loop below]	node		{a: $\eps \ra \eps$}	(a2)
+									edge				node		{$\eps: \eps \ra \eps$} (b2)
+							(b2)	edge [loop below]	node		{b: $\eps \ra$ XX}		(b2)
+									edge				node		{$\eps: \eps \ra \eps$}	(c2)
+							(c2)	edge [loop below]	node		{c: X $\ra \eps$ }		(c2)
+									edge				node		{$\eps: \eps \ra \eps$} (d2)
+							(d2)	edge [loop below]	node		{d: $\eps \ra \eps$}	(d2)
+									edge				node [swap]	{$\eps: \# \ra \eps$}	(f);
+						
+				\end{tikzpicture}
+				\caption{PDA for M}
+			\end{figure}
+
+	\end{qpart}
+
+	\begin{qpart}{3}
+
+		We need to prove that L is not context free. We prove this using the contrapositive statement of the pumping lemma. \br%
+
+		Consider that L is context free, and hence it must satisfy pumping lemma for CFLs. Given $p$, we choose a string $w \in L$ such that $w = a^p b^{2p} c^p d^p$. \br%
+		
+		Consider all partions of the string $w$ as $uvxyz$, such that $\abs{vxy} \le p$ and $\abs{vy} > 0$. The string $vy$, thus, can be represented as $a^{t_a} b^{t_b} c^{t_c} d^{t_d}$. For all such partitions, we need to find an $i \ge 0$ such that $u v^i x y^i z \notin L(L)$. Since $\abs{vy} \le p$, only the following cases are possible \br%
+
+		\begin{qcase}{1}{$t_a + t_b \ge 0$ and $t_c = 0 = t_d$}
+
+			For this case, if we choose $i = 0$, and if $t_a > 0$, then the constraint $i = k$ will not hold (\bt{Note:} This i is different and is only to represent the constraint), or if $t_b > 0$, the constraint $j = 2l$ will no longer hold. \br%
+			
+			Hence, for this case, we can say that $uxz \notin L(L)$.
+			
+		\end{qcase}
+
+		\begin{qcase}{2}{$t_b + t_c \ge 0$ and $t_a = 0 = t_d$}
+
+			For this case, if we choose $i = 0$, and if $t_b > 0$, then the constraint $j = 2l$ will not hold. In the same way, if $t_c > 0$, then the constraint $i = k$ will not hold. \br%
+
+			Hence, for this case too, we can say that $uxz \notin L(L)$.
+			
+		\end{qcase}
+
+		\begin{qcase}{3}{$t_c + t_d \ge 0$ and $t_a = 0 = t_b$}
+
+			For this case, if we choose $i = 0$, and if $t_c > 0$, then the constraint $i = k$ will break, or if $t_d > 0$, then the constrain $j = 2l$ will no longer hold. \br%
+
+			Hence, for this case as well, we can say that $uxz \notin L(L)$.
+			
+		\end{qcase}
+
+		Therefore, for any partition following the above constraints, choosing $i = 0$, we can find a string that is not in the language defined by $L$. Hence, using pumping lemma, we can say that $L$ is not context free.
+		
+	\end{qpart}
+
+\end{question}
+
+\begin{question}
+
+	In order to prove the decidability of a language, we need to construct a halting turing machine, $M$, for the language \textit{i.e.} $M$ either \textit{accepts} or \textit{rejects}.
+
+	\begin{qpart}{1}
+
+		\begin{align*}
+			L_1 = \set{\angl{M} \pipe M \mt{is a DFA which does not accept any string that contains 101 as a substring}}
+		\end{align*}
+
+		We construct a turing machine $M_1$ which accepts the language $L_1$. \br%
+
+		\bt{Description of the Turing Machine $\bm{M_1}$} \br%
+		\begin{margin}
+			\bt{Input:} A DFA $D$
+
+			\begin{enumerate}
+				\item List all the reachable states from the start state in the DFA $D$ in the tape
+				\item Starting from all these states (reachable states), simulate the DFA on the string `101'
+				\item Starting from all the corresponding states (after simulation) one by one, check if any of the accepted states is reachable. If an accepted state is reachable for any state, \textit{reject}
+				\item If no accepted state is reachable from these states, \textit{accept}
+			\end{enumerate}
+		\end{margin}
+
+		Since all steps are feasible in closed time, we say that the turing machine $M_1$ is a halting turing machine. \br%
+
+		\begin{qproof}{The machine $M_1$ accepts the language $L_1$}
+
+			Firstly we prove that if a DFA $D$ accepts a string $w = w_1 101 w_2$, then the machine $M_1$ rejects this DFA. \br%
+
+			Let $p \in Q(D)$ such that $p = \func{\delta}{s, w_1}$ \textit{i.e.} p is the state reached after simulating the string w on the DFA $D$. Since we are reaching $p$ after simulating a string, clearly, $p$ is reachable from the start state, and hence will be included in the tape after the first step. \br%
+
+			As in the second step, we replace this state by another state $q$ such that $q = \func{\delta}{p, 101}$. Now since $D$ accepts the string $w$, then the state $\func{\delta}{q, w_2}$ must be an accept state. Therefore, we can reach an accept state from the state $q$. As per the 3rd step, we reject the DFA $D$. \br%
+
+			Following from the above case, if the DFA $D$ does not accept any string $w = w_1 101 w_2$, then it is impossible to find a path from q which ends at an accepted state. Hence, the turing machine will not accept in this case. Also, since the number of paths are finite, the machine will also halt. \br%
+
+			Hence, we can say that the turing machine $M_1$ accepts the language $L_1$.
+	
+		\end{qproof}
+
+		Since $M_1$ both accepts $L_1$ and is halting, we can say that $L_1$ is finite.
+
+	\end{qpart}
+
+	\begin{qpart}{2}
+
+		\begin{align*}
+			L_2 = \set{\angl{R, S} \pipe \mt{R, S are regular expressions and} L(R) \subseteq L(S)}
+		\end{align*}
+
+		For this question we use the following concepts
+		\begin{itemize}
+			\item Every regular language has a corresponding DFA
+			\item If $L_1$ and $L_2$ are regular languages, then we can construct a DFA in closed time for the language $L_1 \cup L_2$ (Discussed in class)
+			\item If $L_1 \subseteq L_2$, then $L_1 \cup L_2 = L_2$
+		\end{itemize}
+
+		We construct a turing machine $M_2$ which accepts the language $L_2$. \br%
+
+		\bt{Description of the Turing Machine $\bm{M_2}$} \br%
+		\begin{margin}
+			\bt{Input:} Two regular expressions $R, S$
+
+			\begin{enumerate}
+				\item Construct a DFA $D_R$ for the regualar expression $R$ and a DFA $D_S$ for the regular expression $S$
+				\item Using the DFAs $D_R$ and $D_S$, construct a DFA $D$ for the language $L(R) \cup L(S)$
+				\item Using the $EQ_{DFA}$ algorithm discussed in class, \textit{accept} if $EQ_{DFA}(D, D_S)$ accepts, \textit{reject} otherwise
+			\end{enumerate}
+		\end{margin}
+
+		From the construction of the turing machine $M$, we can say that it is halting as all the steps are halting. Also, we are accepting if and only if $D = D_S$ \textit{i.e.} iff $R \subseteq S$. Therefore the turing machine $M_2$ is a halting turing machine which accepts the language $L$. Thus, we can say that $L_2$ is decidable.
+		
+	\end{qpart}
+	
+\end{question}
+
+\begin{question}
+
+	\begin{align*}
+		L = \set{\angl{G} \pipe G \mt{is a CFG over} \set{0, 1}^* \mt{and} 1^* \subseteq L(G) }
+	\end{align*}
+
+	This is similar to question 3b. We again use the following concepts for this question
+	\begin{itemize}
+		\item For every CFG, we have a corresponding PDA
+		\item Intersection is closed between CFLs and Regular Languages \textit{i.e.} $L(G) \cap L(D)$ is a CFL (where $G$ is a CFG and $D$ is a DFA)
+		\item For a regular language, we can create a DPDA
+		\item If $1^\ast \subseteq G$, then the DPDA for G will accept all strings $1^\ast$, and hence every state obtained after simulating $1^a$ for some $a \ge 0$ should be an accept state
+	\end{itemize}
+
+	We can now construct a turing machine $M$ which accepts the language $L$ \br%
+
+	\bt{Description of the Turing Machine $\bm{M}$} \br%
+	\begin{margin}
+		\bt{Input:} A CFG $G$
+
+		\begin{enumerate}
+			\item Check if $G$ is a CFG, if not, \textit{reject}
+			\item Construct a PDA $P$ for G and a DFA $D$ for $1^\ast$
+			\item Using $P$ and $D$, construct a PDA for $1^\ast$
+			\item Convert $P$ to a DPDA\. If it is not possible, \textit{reject}
+			\item Set $s = s_0$ (the start state in $P$)
+			\item do while ($s$ hasn't been visited)
+				\begin{margin}
+					if ($s$ is not an accept state) 
+					\begin{margin}
+						\textit{reject} $G$
+					\end{margin}
+
+					else
+					\begin{margin}
+						$\,s = \func{\delta}{s, 1}$
+
+						$\func{\mt{\textsc{visited}}}{s} =$ \textsc{True}
+					\end{margin}
+				\end{margin}
+			\item If not rejected yet, \textit{accept} $G$
+		\end{enumerate}
+	\end{margin} \br%
+
+	From the construction of the turing machine $M$, we can say that it is halting as all the steps are halting. \br%
+	
+	If the DPDA cannot be constructed, we can safely assume that the language formed after intersection is not a regular language, and hence it cannot be $1^\ast$. Therefore we simply reject. \br%
+
+	Also, we are accepting if and only if every state reached on simulating $1*$ on the DPDA is an accept state. If this condition is not true, then we can find a string $1^a$ such that $1^a$ is not accepted, and hence $G$ shall not be accepted. Also, since $P$ is a finite DPDA, if we keep on simulating the current state on the string $1$, we will find a cycle. After this cycle, it is redundant to check for the above condition. Hence, we are done. \br%
+	
+	Therefore we are accepting iff $1^* \subseteq L(G)$. Therefore the turing machine $M$ is a halting turing machine which accepts the language $L$. Therefore, this suggests that $L$ is decidable.
+	
+\end{question}
+
+\end{document}
